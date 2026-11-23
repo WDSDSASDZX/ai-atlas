@@ -9,6 +9,11 @@ link: "https://www.sarvam.ai/blogs/sarvam-prism"
 source: "Sarvam AI 官方公告"
 featured: false
 draft: false
+verifiedAt: "2026-11-23"
+availability: "released"
+openness: "weights"
+access: "Hugging Face 官方模型卡"
+related: ["src/data/directory/2026-11-22-sarvam-105b-1711.md"]
 links:
   - title: "Prism 官方模型卡"
     url: "https://huggingface.co/sarvamai/prism"

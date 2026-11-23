@@ -9,6 +9,12 @@ link: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/i
 source: "Google 官方发布"
 featured: true
 draft: false
+verifiedAt: "2026-11-23"
+availability: "released"
+openness: "hosted"
+access: "Gemini API、Gemini 应用和 Google Antigravity，部分入口需订阅"
+takeaway: "三个型号覆盖长流程、日常执行和复杂高频工作。选型时可以对着自己的代码或文件测。"
+related: ["src/data/directory/2026-11-17-gpt-6-2.md","src/data/directory/2026-11-19-gemini-mac-computer-use.md","src/data/directory/2026-11-10-gemini-robotics-2-5.md"]
 timeline:
   - date: "2026-11-10"
     title: "Carbon 开放开发者入口"

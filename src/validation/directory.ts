@@ -4,6 +4,10 @@ const optionalHttpUrl = z.union([z.string().url().refine(v => /^https?:\/\//.tes
 const dateOnly = z.preprocess(value => value instanceof Date ? value.toISOString().slice(0, 10) : value,
   z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "日期格式应为 YYYY-MM-DD")
     .refine(value => !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value, "日期无效"));
+const optionalDate = z.preprocess(value => value === "" || value === null ? undefined : value, dateOnly.optional());
+export const topicKeys = ["models", "coding", "deployment", "multimodal", "research", "governance", "industry", "products"] as const;
+export const availabilityKeys = ["released", "preview", "announced", "restricted", "tracked", "retired"] as const;
+export const opennessKeys = ["source", "weights", "hosted"] as const;
 
 export const directorySchema = (imageSchema: z.ZodTypeAny) =>
   z.object({
@@ -16,7 +20,14 @@ export const directorySchema = (imageSchema: z.ZodTypeAny) =>
     link: z.preprocess(value => value === null ? undefined : value, optionalHttpUrl),
     source: z.string().optional(),
     recordedAt: dateOnly,
-    eventDate: z.preprocess(value => value === "" || value === null ? undefined : value, dateOnly.optional()),
+    eventDate: optionalDate,
+    verifiedAt: optionalDate,
+    topics: z.preprocess(value => value ?? [], z.array(z.enum(topicKeys))),
+    availability: z.preprocess(value => value === "" || value === null ? undefined : value, z.enum(availabilityKeys).optional()),
+    openness: z.preprocess(value => value === "" || value === null ? undefined : value, z.enum(opennessKeys).optional()),
+    access: z.string().nullish(),
+    takeaway: z.string().nullish(),
+    related: z.preprocess(value => value ?? [], z.array(z.string())),
     pricing: z.string().optional(),
     note: z.string().optional(),
     status: z.string().optional(),

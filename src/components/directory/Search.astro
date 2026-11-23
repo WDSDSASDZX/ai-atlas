@@ -1,25 +1,33 @@
 ---
 import { Icon } from "astro-icon/components";
-import { getListings } from "@lib/getListings";
+import { categories, topicLabels, topicsFor, type DirectoryEntry } from "@lib/editorial";
 import config from "@util/themeConfig";
-const listings = await getListings();
-const categories = [{ key: "all", label: "全部" }, { key: "model", label: "模型" }, { key: "tool", label: "工具" }, { key: "project", label: "开源项目" }, { key: "news", label: "资讯" }, { key: "thought", label: "想法" }, { key: "note", label: "笔记" }];
-const allTags = [...new Set(listings.flatMap(item => item.data.tags))].sort((a, b) => a.localeCompare(b, "zh-CN"));
+interface Props { entries: DirectoryEntry[]; mode: "timeline" | "library" }
+const { entries, mode } = Astro.props;
+const isLibrary = mode === "library";
+const filters = [["all", "全部"], ...Object.entries(categories)];
+const tags = [...new Set(entries.flatMap(item => item.data.tags))].sort((a, b) => a.localeCompare(b, "zh-CN"));
+const months = [...new Set(entries.flatMap(item => item.data.eventDate ? [item.data.eventDate.slice(0, 7)] : []))].sort().reverse();
+const topics = new Set(entries.flatMap(item => topicsFor(item.data)));
 ---
-<section class="atlas-toolbar not-prose" aria-labelledby="library-heading">
-  <div class="library-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="library-heading">我的 AI 信息库</h2></div><p>好用的留下，重要的记下。</p></div>
-  <div class="filter-top">
-    <div class="category-tabs" role="group" aria-label="按分类筛选">
-      {categories.map(category => <button type="button" data-category-filter={category.key} aria-pressed={category.key === "all" ? "true" : "false"}>{category.label}<span>{category.key === "all" ? listings.length : listings.filter(item => item.data.category === category.key).length}</span></button>)}
-    </div>
-    <label class="atlas-search"><Icon name="tabler:search" /><input id="search" type="search" placeholder="搜索名称、标签、笔记…" aria-label="搜索信息库" /><kbd>Ctrl K</kbd></label>
+<section id="browse" class="browse-tools" aria-label="搜索与筛选">
+  <div class="browse-line">
+    <label class="atlas-search"><Icon name="tabler:search" /><input id="search" type="search" placeholder="搜索标题、来源、正文…" aria-label="关键词搜索" /></label>
+    <button id="clear-filters" type="button" class="quiet-button" hidden>清除筛选</button>
+    <p id="result-count" role="status" aria-live="polite">{entries.length} 条{isLibrary ? "记录" : "动态"}</p>
   </div>
-  <div class="filter-bottom">
-    <div class="filter-options">
-      <label>标签<select id="tag-filter"><option value="">全部标签</option>{allTags.map(tag => <option value={tag}>{config.directoryData.tags.find(value => value.key === tag)?.name || tag}</option>)}</select></label>
-      <label>排序<select id="sort-filter"><option value="featured">推荐优先</option><option value="newest">最近收录</option><option value="oldest">最早收录</option><option value="title">名称排序</option></select></label>
-      <label class="featured-filter"><input id="featured-filter" type="checkbox" />只看推荐</label>
-    </div>
-    <p id="result-count" role="status" aria-live="polite">{listings.length} 条记录</p>
+  {isLibrary && <div class="category-tabs" role="group" aria-label="按分类筛选">
+    {filters.map(([key, label]) => <button type="button" data-category-filter={key} aria-pressed={key === "all" ? "true" : "false"}>{label}<span>{key === "all" ? entries.length : entries.filter(item => item.data.category === key).length}</span></button>)}
+  </div>}
+  <div class="browse-options">
+    <label>事件月份<select id="month-filter"><option value="">全部月份</option>{months.map(month => <option value={month}>{month}</option>)}</select></label>
+    <label>主题<select id="topic-filter"><option value="">全部主题</option>{[...topics].map(key => <option value={key}>{topicLabels[key]}</option>)}</select></label>
+    {isLibrary && <label>标签<select id="tag-filter"><option value="">全部标签</option>{tags.map(tag => <option value={tag}>{config.directoryData.tags.find(value => value.key === tag)?.name || tag}</option>)}</select></label>}
+    <label>排序<select id="sort-filter">
+      {isLibrary && <option value="featured">推荐优先</option>}
+      <option value="event-newest">事件从新到旧</option><option value="event-oldest">事件从旧到新</option>
+      {isLibrary && <><option value="newest">最近收录</option><option value="oldest">最早收录</option><option value="title">名称排序</option></>}
+    </select></label>
+    {isLibrary && <label class="featured-filter"><input id="featured-filter" type="checkbox" />只看推荐</label>}
   </div>
 </section>

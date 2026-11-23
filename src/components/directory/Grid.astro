@@ -1,10 +1,26 @@
 ---
 import { getListings } from "@lib/getListings";
+import { getEvents } from "@lib/editorial";
 import Card from "./cards/index.astro";
-const listings = (await getListings()).sort((a,b) => Number(b.data.featured) - Number(a.data.featured) || b.data.recordedAt.localeCompare(a.data.recordedAt) || a.data.title.localeCompare(b.data.title, "zh-CN"));
+import EventGroups from "./EventGroups.astro";
+import Search from "./Search.astro";
+interface Props { mode: "timeline" | "library" }
+const { mode } = Astro.props;
+const listings = await getListings();
+const isTimeline = mode === "timeline";
+const entries = isTimeline ? getEvents(listings) : listings.sort((a, b) =>
+  Number(b.data.featured) - Number(a.data.featured)
+  || b.data.recordedAt.localeCompare(a.data.recordedAt)
+  || a.data.title.localeCompare(b.data.title, "zh-CN"));
 ---
-<div id="directory-grid" class="atlas-grid not-prose">{listings.map(item => <Card item={item} />)}</div>
-<div id="empty-state" class="empty-state not-prose" hidden><h3>还没找到匹配的信息</h3><p>换个关键词，或清除筛选重新看看。</p><button id="reset-filters" type="button" class="secondary-button">清除筛选</button></div>
+<Search entries={entries} mode={mode} />
+<div id="directory-grid" class={isTimeline ? "event-groups" : "atlas-grid"} data-mode={mode}>
+  {isTimeline ? <EventGroups entries={entries} searchable pageLevel /> : entries.map(item => <Card item={item} />)}
+</div>
+<div id="empty-state" class="empty-state" hidden>
+  <h2>没有符合条件的记录</h2><p>试试更短的关键词，或清除筛选。</p>
+  <button id="reset-filters" type="button" class="secondary-button">清除筛选</button>
+</div>
 <script>
   import { initDirectory } from "@lib/directory";
   initDirectory();

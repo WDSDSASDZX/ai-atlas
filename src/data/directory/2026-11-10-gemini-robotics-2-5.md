@@ -9,6 +9,11 @@ link: "https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-p
 source: "Google DeepMind 官方博客"
 featured: false
 draft: false
+verifiedAt: "2026-11-23"
+availability: "restricted"
+openness: "hosted"
+access: "面向 Google DeepMind 的机器人合作伙伴"
+related: ["src/data/directory/2026-10-27-genie-4.md","src/data/directory/2026-11-10-pan-2.md"]
 ---
 
 ## 从演示到试点

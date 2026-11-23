@@ -1,0 +1,29 @@
+---
+import { availabilityLabels, entryPath, groupEvents, topicLabels, topicsFor, type DirectoryEntry } from "@lib/editorial";
+import { entrySearch } from "@lib/entrySearch";
+import { withBase } from "@util/paths";
+interface Props { entries: DirectoryEntry[]; searchable?: boolean; pageLevel?: boolean }
+const { entries, searchable = false, pageLevel = false } = Astro.props;
+const groups = groupEvents(entries);
+const DateHeading = pageLevel ? "h2" : "h3";
+---
+{[...groups].map(([day, items]) => <section class="event-day" data-event-day={day}>
+  <DateHeading class="event-day-label"><time datetime={day}>{day}</time></DateHeading>
+  <ul class="event-list">
+    {items.map(item => {
+      const topic = topicsFor(item.data)[0];
+      const row = searchable ? entrySearch(item) : {};
+      return <li class="listing event-row" {...row}>
+        <div class="event-row-main">
+          <a data-entry-link href={withBase(entryPath(item))}>{item.data.title}</a>
+          <p>{item.data.description}</p>
+        </div>
+        <div class="event-row-meta">
+          {topic && <span class="topic-chip">{topicLabels[topic]}</span>}
+          {item.data.availability && <span class="event-status">{availabilityLabels[item.data.availability]}</span>}
+          {item.data.source && <span class="event-source">{item.data.source}</span>}
+        </div>
+      </li>;
+    })}
+  </ul>
+</section>)}

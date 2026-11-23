@@ -64,6 +64,64 @@ content:
         options:
           format: yyyy-MM-dd
           time: false
+      - name: topics
+        label: 站点主题（可多选）
+        type: select
+        description: 供时间线与资料库筛选。留空时网站会按分类及标签归类。
+        options:
+          multiple: true
+          values:
+            - { name: models, label: 模型发布 }
+            - { name: coding, label: AI 编程与 Agent }
+            - { name: deployment, label: 开源与部署 }
+            - { name: multimodal, label: 多模态与机器人 }
+            - { name: research, label: 研究与评测 }
+            - { name: governance, label: 治理与安全 }
+            - { name: industry, label: 产业与算力 }
+            - { name: products, label: 应用与工具 }
+      - name: availability
+        label: 发布或跟踪状态
+        type: select
+        options:
+          values:
+            - { name: released, label: 已发布 }
+            - { name: preview, label: 预览 }
+            - { name: announced, label: 已宣布 }
+            - { name: restricted, label: 受限开放 }
+            - { name: tracked, label: 持续跟踪 }
+            - { name: retired, label: 已停用 }
+      - name: verifiedAt
+        label: 最后核对日期
+        description: 核对过链接、可用范围或后续进展后填写。
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+          time: false
+      - name: openness
+        label: 开放方式
+        type: select
+        options:
+          values:
+            - { name: source, label: 代码开源 }
+            - { name: weights, label: 开放权重 }
+            - { name: hosted, label: 托管使用 }
+      - name: access
+        label: 使用入口与要求
+        type: string
+        description: 例如 API、浏览器、GitHub、访问地区或最低系统要求。
+      - name: takeaway
+        label: 为什么重要
+        type: text
+        description: 一两句即可。入选「本期重点」时会优先显示这一栏。
+      - name: related
+        label: 相关条目
+        type: reference
+        options:
+          collection: directory
+          multiple: true
+          value: "{path}"
+          label: "{primary}"
       - name: tags
         label: 标签
         type: string

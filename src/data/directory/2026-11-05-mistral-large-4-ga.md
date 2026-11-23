@@ -9,6 +9,11 @@ link: "https://docs.mistral.ai/models/mistral-large-latest"
 source: "Mistral 官方模型文档"
 featured: false
 draft: false
+verifiedAt: "2026-11-23"
+availability: "released"
+openness: "weights"
+access: "官方模型文档，下载和再分发须核对许可"
+related: ["src/data/directory/2026-11-16-vllm-034.md"]
 ---
 
 这条记录采用文档标注的 11 月 5 日 GA 日期。文档给出约 1.05 万亿总参数、520 亿激活参数，并列出 Mistral Ecosystem Open Weight License v26.10。计划商用、托管或再分发时，需要按权重版本核对许可条件。

@@ -9,6 +9,9 @@ link: "https://nvidianews.nvidia.com/_gallery/download_pdf/6b04462d3d63321add749
 source: "NVIDIA 官方公告"
 featured: false
 draft: false
+verifiedAt: "2026-11-23"
+availability: "tracked"
+related: ["src/data/directory/2026-11-16-bis-cloud-compute-rule.md","src/data/directory/2026-11-19-anthropic-ipo.md"]
 timeline:
   - date: "2026-11-12"
     title: "宣布 CEO 交接"

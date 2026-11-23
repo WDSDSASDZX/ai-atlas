@@ -11,6 +11,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
     <div class="nav-links">
       {config.header.navbar.links.map(item => <a href={withBase(item.href)}
         class:list={[{ active: currentPath === withBase(item.href).replace(/\/$/, "") }]}
+        aria-current={currentPath === withBase(item.href).replace(/\/$/, "") ? "page" : undefined}
         target={item.target} rel={item.target === "_blank" ? "noopener noreferrer" : undefined}>{item.name}</a>)}
     </div>
     <div class="nav-actions">

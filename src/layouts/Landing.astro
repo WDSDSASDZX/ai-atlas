@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import AppShell from "@components/app/AppShell.astro";
+const { title, description } = Astro.props;
 ---
-<BaseLayout><AppShell><main id="main-content" class="atlas-main"><slot /></main></AppShell></BaseLayout>
+<BaseLayout title={title} description={description}>
+  <AppShell><main id="main-content" class="atlas-main"><slot /></main></AppShell>
+</BaseLayout>

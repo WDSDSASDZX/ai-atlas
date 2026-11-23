@@ -50,15 +50,17 @@ brandText = "AI Atlas"
 [header.navbar]
 colorModeSelector = true
 [[header.navbar.links]]
-name = "信息库"
+name = "首页"
 href = "/"
 [[header.navbar.links]]
-name = "使用指南"
-href = "/guide"
+name = "AI 动态"
+href = "/timeline/"
 [[header.navbar.links]]
-name = "GitHub"
-href = "https://github.com/WDSDSASDZX/ai-atlas"
-target = "_blank"
+name = "资料库"
+href = "/library/"
+[[header.navbar.links]]
+name = "使用指南"
+href = "/guide/"
 
 [header.actionButton]
 text = "添加信息"

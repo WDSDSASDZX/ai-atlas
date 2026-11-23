@@ -9,6 +9,10 @@ link: "https://publications.europa.eu/resource/cellar/e501019f-dd70-11f1-8501-01
 source: "欧盟官方公报"
 featured: true
 draft: false
+verifiedAt: "2026-11-23"
+availability: "released"
+takeaway: "准备在欧洲部署 AI 的团队，可以据此了解监管试验如何申请、测试和退出。"
+related: ["src/data/directory/2026-11-03-eu-chatbot-press-rights.md","src/data/directory/2026-11-13-eu-dublin-ai.md"]
 links:
   - title: "AI Act 第 57 条"
     url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-57"

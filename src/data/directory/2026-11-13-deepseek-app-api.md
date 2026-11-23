@@ -9,6 +9,11 @@ link: "https://api-docs.deepseek.com/news/news261113/"
 source: "DeepSeek API 官方更新"
 featured: false
 draft: false
+verifiedAt: "2026-11-23"
+availability: "released"
+openness: "hosted"
+access: "DeepSeek API"
+related: ["src/data/directory/deepseek.md"]
 links:
   - title: "Responses API 文档"
     url: "https://api-docs.deepseek.com/api/create-response/"

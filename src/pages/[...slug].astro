@@ -9,4 +9,4 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 export async function getStaticPaths() { return getRootPages(); }
 ---
-{!slug ? <Landing><Content /></Landing> : <Listing frontmatter={entry.data} slug={slug}><Content /></Listing>}
+{!slug ? <Landing><Content /></Landing> : <Listing entry={entry}><Content /></Listing>}

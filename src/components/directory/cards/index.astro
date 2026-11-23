@@ -1,24 +1,29 @@
 ---
 import { Icon } from "astro-icon/components";
 import UiTag from "@components/ui/tags/Tag.astro";
-import config from "@util/themeConfig";
 import { withBase } from "@util/paths";
-import type { CollectionEntry } from "astro:content";
-interface Props { item: CollectionEntry<"directory"> }
+import { availabilityLabels, categories, entryPath, isEdition, opennessLabels, type DirectoryEntry } from "@lib/editorial";
+import { entrySearch } from "@lib/entrySearch";
+interface Props { item: DirectoryEntry }
 const { item } = Astro.props;
 const data = item.data;
-const labels: Record<string,string> = { model: "模型", tool: "工具", project: "开源项目", news: "资讯", thought: "想法 / 灵感", note: "学习 / 实践笔记" };
-const icons: Record<string,string> = { model: "tabler:brain", tool: "tabler:tool", project: "tabler:brand-github", news: "tabler:news" };
-const extraText = [data.status, ...data.attributes.flatMap(item => [item.name, item.value]), ...data.timeline.flatMap(item => [item.date, item.title, item.description]), ...data.thoughts.flatMap(item => [item.title, item.kind, item.content, item.date]), ...data.strengths, ...data.limitations, ...data.tasks.map(item => item.title), ...data.sections.flatMap(item => [item.title, item.content]), ...data.links.flatMap(item => [item.title, item.description])];
-const search = [data.title, data.description, data.note, data.source, data.pricing, labels[data.category], ...data.tags, ...extraText, ...data.tags.map((tag: string) => config.directoryData.tags.find(value => value.key === tag)?.name), item.body].filter(Boolean).join(" ").toLocaleLowerCase();
+const icons = {
+  model: "tabler:brain", tool: "tabler:tool", project: "tabler:brand-github",
+  news: "tabler:news", thought: "tabler:bulb", note: "tabler:notes",
+};
+const flags = [data.availability && availabilityLabels[data.availability], data.openness && opennessLabels[data.openness]].filter(Boolean);
+const date = data.eventDate ?? data.recordedAt;
 ---
-<article class="listing atlas-card" data-tags={JSON.stringify(data.tags)} data-category={data.category}
-  data-date={data.recordedAt} data-title={data.title} data-featured={data.featured ? "1" : "0"} data-search={search}>
-  <div class="card-top"><span class:list={["card-icon", data.category]}><Icon name={icons[data.category] || "tabler:stack-2"} /></span><span class="card-category">{labels[data.category]}</span>{data.featured && <span class="card-featured"><Icon name="tabler:star-filled" />推荐</span>}</div>
-  <h3 class="card-title"><a href={withBase("entry/" + item.id + "/")}>{data.title}</a></h3>
+<article class="listing atlas-card" {...entrySearch(item)}>
+  <div class="card-top">
+    <span class:list={["card-icon", data.category]}><Icon name={icons[data.category]} /></span>
+    <span class="card-category">{isEdition(item) ? "月度导读" : categories[data.category]}</span>
+    {data.featured && <span class="card-featured"><Icon name="tabler:star-filled" />推荐</span>}
+  </div>
+  <h3 class="card-title"><a data-entry-link href={withBase(entryPath(item))}>{data.title}</a></h3>
   <p class="card-description">{data.description}</p>
-  {(data.status || data.timeline.length > 0 || data.thoughts.length > 0) && <p class="card-knowledge">{[data.status, data.timeline.length ? `${data.timeline.length} 个历程节点` : "", data.thoughts.length ? `${data.thoughts.length} 条想法` : ""].filter(Boolean).join(" · ")}</p>}
+  {(flags.length > 0 || data.access || data.status) && <p class="card-knowledge">{[...flags, data.access, data.status].filter(Boolean).join(" · ")}</p>}
   {data.note && <p class="card-note"><span>我的评价</span>{data.note}</p>}
-  <div class="card-tags">{data.tags.map((tag: string) => <UiTag tag={tag} />)}</div>
-  <div class="card-bottom"><time datetime={data.recordedAt}>收录 {data.recordedAt}</time><span>{data.source || "个人整理"}</span></div>
+  <div class="card-tags">{data.tags.map(tag => <UiTag tag={tag} />)}</div>
+  <div class="card-bottom"><span>{data.eventDate ? "事件 " : "收录 "}<time datetime={date}>{date}</time></span>{data.source && <span>{data.source}</span>}</div>
 </article>

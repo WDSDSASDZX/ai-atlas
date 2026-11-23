@@ -9,6 +9,10 @@ link: "https://www.anthropic.com/news/ipo-close"
 source: "Anthropic 公告与 SEC 招股文件"
 featured: true
 draft: false
+verifiedAt: "2026-11-23"
+availability: "released"
+takeaway: "公开招股文件提供可核对的业务和风险披露，让 AI 实验室的商业化进展更容易跟踪。"
+related: ["src/data/directory/2026-11-09-claude-fable-5-2.md","src/data/directory/2026-11-23-nvidia-november.md"]
 timeline:
   - date: "2026-10-26"
     title: "提交公开 S‑1"
