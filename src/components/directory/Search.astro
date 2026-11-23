@@ -3,7 +3,7 @@ import { Icon } from "astro-icon/components";
 import { getListings } from "@lib/getListings";
 import config from "@util/themeConfig";
 const listings = await getListings();
-const categories = [{ key: "all", label: "全部" }, { key: "model", label: "模型" }, { key: "tool", label: "工具" }, { key: "project", label: "开源项目" }, { key: "news", label: "资讯" }];
+const categories = [{ key: "all", label: "全部" }, { key: "model", label: "模型" }, { key: "tool", label: "工具" }, { key: "project", label: "开源项目" }, { key: "news", label: "资讯" }, { key: "thought", label: "想法" }, { key: "note", label: "笔记" }];
 const allTags = [...new Set(listings.flatMap(item => item.data.tags))].sort((a, b) => a.localeCompare(b, "zh-CN"));
 ---
 <section class="atlas-toolbar not-prose" aria-labelledby="library-heading">

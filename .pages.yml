@@ -38,6 +38,10 @@ content:
               label: 开源项目
             - name: news
               label: 资讯
+            - name: thought
+              label: 想法 / 灵感
+            - name: note
+              label: 学习 / 实践笔记
       - name: link
         label: 官网 / GitHub / 原文链接
         type: string
@@ -75,6 +79,132 @@ content:
       - name: image
         label: 封面图（可选）
         type: image
+      - name: status
+        label: 当前状态（可自由填写）
+        type: string
+        description: 例如待研究、正在体验、持续关注、已归档。
+      - name: attributes
+        label: 自定义属性
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.name}"
+        description: 自由添加“属性名 + 内容”，例如作者、版本、适用场景、我的评分。
+        fields:
+          - name: name
+            label: 属性名称
+            type: string
+            required: true
+          - name: value
+            label: 属性内容
+            type: text
+      - name: timeline
+        label: 发展历程 / 时间线
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.date} · {fields.title}"
+        description: 每件事添加一个节点；网站按日期从新到旧展示。这里填写真实事件日期。
+        fields:
+          - name: date
+            label: 事件日期
+            type: date
+            default: ""
+            required: true
+            options:
+              format: yyyy-MM-dd
+              time: false
+          - name: title
+            label: 节点标题
+            type: string
+            required: true
+          - name: description
+            label: 发生了什么 / 我的看法
+            type: text
+          - name: link
+            label: 来源链接（可选）
+            type: string
+      - name: thoughts
+        label: 想法 / 灵感 / 使用记录
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.title}"
+        description: 随时加一条。类型可自由填写，前台按你的排列顺序显示。
+        fields:
+          - name: title
+            label: 小标题
+            type: string
+            required: true
+          - name: kind
+            label: 记录类型
+            type: string
+            description: 例如灵感、实践、踩坑、问题、摘录、复盘。
+          - name: date
+            label: 记录日期（可选）
+            type: date
+            default: ""
+            options:
+              format: yyyy-MM-dd
+              time: false
+          - name: content
+            label: 内容
+            type: text
+      - name: strengths
+        label: 优点 / 值得借鉴
+        type: text
+        list: true
+      - name: limitations
+        label: 局限 / 待验证
+        type: text
+        list: true
+      - name: tasks
+        label: 下一步 / 待办
+        type: object
+        list: true
+        description: 在后台勾选完成，网站展示进度。
+        fields:
+          - name: title
+            label: 计划做什么
+            type: string
+            required: true
+          - name: done
+            label: 已完成
+            type: boolean
+            default: false
+      - name: links
+        label: 相关资料 / 参考链接
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.title}"
+        fields:
+          - name: title
+            label: 链接名称
+            type: string
+            required: true
+          - name: url
+            label: 完整网址（http / https）
+            type: string
+            required: true
+          - name: description
+            label: 为什么收藏 / 备注
+            type: text
+      - name: sections
+        label: 自定义栏目（自由加标题和内容）
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.title}"
+        description: 可用于对比、路线图、问题清单、提示词等，按列表顺序展示。需要图片、表格、代码时使用下方详细笔记。
+        fields:
+          - name: title
+            label: 栏目标题
+            type: string
+            required: true
+          - name: content
+            label: 自由内容（保留换行）
+            type: text
       - name: featured
         label: 推荐
         type: boolean
@@ -84,7 +214,7 @@ content:
         type: boolean
         default: true
       - name: body
-        label: 详细笔记
+        label: 自由长文（支持图片、表格、代码）
         type: rich-text
   - name: guide
     label: 使用指南

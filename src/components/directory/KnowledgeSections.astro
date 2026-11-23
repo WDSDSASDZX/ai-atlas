@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from "astro:content";
+interface Props { data: CollectionEntry<"directory">["data"] }
+const { data } = Astro.props;
+const timeline = [...data.timeline].sort((a, b) => b.date.localeCompare(a.date));
+---
+{data.attributes.length > 0 && <dl class="knowledge-properties">{data.attributes.map(item => <div><dt>{item.name}</dt><dd class="preserve-lines">{item.value}</dd></div>)}</dl>}
+{timeline.length > 0 && <section class="knowledge-section" aria-labelledby="timeline-heading">
+  <div class="section-heading"><h2 id="timeline-heading">发展历程</h2><span>{timeline.length} 个节点 · 从新到旧</span></div>
+  <ol class="knowledge-timeline">{timeline.map(item => <li><time datetime={item.date}>{item.date}</time><div><h3>{item.title}</h3>{item.description && <p class="preserve-lines">{item.description}</p>}{item.link && <a href={item.link} target="_blank" rel="noopener noreferrer">查看来源 ↗</a>}</div></li>)}</ol>
+</section>}
+{data.thoughts.length > 0 && <section class="knowledge-section" aria-labelledby="thoughts-heading">
+  <div class="section-heading"><h2 id="thoughts-heading">想法与记录</h2><span>{data.thoughts.length} 条</span></div>
+  <div class="thought-list">{data.thoughts.map(item => <article class="thought-card"><div class="thought-meta">{item.kind && <span>{item.kind}</span>}{item.date && <time datetime={item.date}>{item.date}</time>}</div><h3>{item.title}</h3>{item.content && <p class="preserve-lines">{item.content}</p>}</article>)}</div>
+</section>}
+{(data.strengths.length > 0 || data.limitations.length > 0) && <section class="knowledge-section review-columns" aria-label="优点与局限">
+  {data.strengths.length > 0 && <div><h2>值得借鉴</h2><ul>{data.strengths.map(text => <li class="preserve-lines">{text}</li>)}</ul></div>}
+  {data.limitations.length > 0 && <div><h2>局限与待验证</h2><ul>{data.limitations.map(text => <li class="preserve-lines">{text}</li>)}</ul></div>}
+</section>}
+{data.tasks.length > 0 && <section class="knowledge-section" aria-labelledby="tasks-heading"><div class="section-heading"><h2 id="tasks-heading">下一步</h2><span>{data.tasks.filter(item => item.done).length} / {data.tasks.length} 已完成</span></div><ul class="knowledge-tasks">{data.tasks.map(item => <li class:list={[{ completed: item.done }]}><span aria-label={item.done ? "已完成" : "未完成"}>{item.done ? "☑" : "☐"}</span><span>{item.title}</span></li>)}</ul></section>}
+{data.sections.map(item => <section class="knowledge-section"><h2>{item.title}</h2>{item.content && <p class="preserve-lines">{item.content}</p>}</section>)}
+{data.links.length > 0 && <section class="knowledge-section" aria-labelledby="links-heading"><h2 id="links-heading">相关资料</h2><ul class="knowledge-links">{data.links.map(item => <li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a>{item.description && <p class="preserve-lines">{item.description}</p>}</li>)}</ul></section>}

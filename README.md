@@ -31,7 +31,7 @@ CMS 直接写入仓库，网站内容不会只保存在浏览器本地。Pages C
 | 字段 | 用途 |
 | --- | --- |
 | title / description | 名称与一句话简介，必填 |
-| category | model / tool / project / news，必填 |
+| category | model / tool / project / news / thought / note，必填 |
 | recordedAt | 收录日期 YYYY-MM-DD，必填 |
 | eventDate | 真实事件或发布日期，可选 |
 | link / source | 官网、仓库或原文链接与来源名称 |
@@ -46,6 +46,14 @@ CMS 直接写入仓库，网站内容不会只保存在浏览器本地。Pages C
 预置条目的 2026-11-23 是收录日期，**不是项目发布日期**。条目仅为起始收藏，不构成最新榜单或自动资讯源。
 
 ## 在 GitHub 中直接编辑
+
+### 历程与自由笔记
+
+后台支持可重复的历程节点、想法记录、自定义属性、优点、局限、待办、资料链接和自定义栏目。所有新字段可选，旧条目无需迁移。`thought`（想法）和 `note`（笔记）可用于独立文章。
+
+`timeline` 节点包含 `date`、`title`、`description`、`link`，按日期从新到旧展示；`thoughts` 包含 `title`、可选 `date`、`kind`、`content`，按编辑顺序展示。`sections` 使用 `title`、`content`，`attributes` 使用 `name`、`value`；自由文字按纯文本保留换行，需要 Markdown 排版时使用正文。`tasks` 使用 `title`、`done`；`links` 使用 `title`、`url`、`description`。所有内容参与首页搜索。完整示例见 `examples/knowledge-template.md`。
+
+结构参考：[Obsidian Properties](https://obsidian.md/help/properties)、[Logseq networked thinking](https://blog.logseq.com/how-to-get-started-with-networked-thinking-and-logseq/)、[AFFiNE](https://affine.pro/)。借鉴自定义属性、日期记录和内容块组织方式，未引入其源代码。
 
 复制 `examples/entry-template.md` 到 `src/data/directory/英文文件名.md`。此目录下每个 Markdown 文件就是一条信息。使用独立的 `/entry/文件名/` 详情路由，避免与首页和使用指南冲突。
 
