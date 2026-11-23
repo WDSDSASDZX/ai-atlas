@@ -1,69 +1,26 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import AppProse from "../components/app/Prose.astro";
-const { frontmatter, slug } = Astro.props;
-import themeConfig from "@util/themeConfig";
-import { Icon } from "astro-icon/components";
 import AppShell from "@components/app/AppShell.astro";
-import config from "@util/themeConfig";
-import SidebarShell from "@components/app/SidebarShell.astro";
-import TitleHeader from "@components/listings/TitleHeader.astro";
-
-const siteTitle = themeConfig.general.title;
-const title = frontmatter?.title || siteTitle;
-const link = frontmatter?.link;
-const description = frontmatter?.description;
-const linkText = link?.replace(/^https?:\/\//, "");
-const pageHeader = themeConfig.listings.pageHeader;
-const sidebar = config.layout.sidebar;
+import { withBase } from "@util/paths";
+const { frontmatter: data, slug } = Astro.props;
+const labels: Record<string,string> = { model: "模型", tool: "工具", project: "开源项目", news: "资讯" };
+const cover = data.image ? (typeof data.image === "string" ? withBase(data.image) : data.image.src) : undefined;
 ---
-
-<BaseLayout title={title} description={description} slug={slug}>
-  {
-    sidebar ? (
-      <SidebarShell showSidebar={false}>
-        <div class="max-w-2xl w-full mx-auto py-20">
-          {pageHeader == "title" && (
-            <TitleHeader
-              title={title}
-              description={description}
-              link={link}
-              linkText={linkText}
-              image={frontmatter.image}
-            />
-          )}
-          <AppProse>
-            <slot />
-          </AppProse>
-        </div>
-      </SidebarShell>
-    ) : (
-      <AppShell>
-        <div class="max-w-2xl w-full mx-auto py-20">
-          {pageHeader == "title" && (
-            <div class="mb-10">
-              <div class="flex justify-between items-center">
-                <h1 class="font-bold text-4xl text-gray-900 dark:text-gray-50">
-                  {title}
-                </h1>
-                {link && (
-                  <a
-                    class="inline-flex items-center gap-1 font-medium text-gray-800 dark:text-gray-100"
-                    href={link}
-                  >
-                    {linkText}
-                    <Icon name="tabler:arrow-up-right" />
-                  </a>
-                )}
-              </div>
-              <p class="text-gray-400 mt-2.5">{description}</p>
-            </div>
-          )}
-          <AppProse>
-            <slot />
-          </AppProse>
-        </div>
-      </AppShell>
-    )
-  }
+<BaseLayout title={data.title} description={data.description}>
+  <AppShell>
+    <main id="main-content" class="detail-page">
+      <a class="back-link" href={withBase()}>返回信息库</a>
+      <header class="detail-header">
+        {data.category && <p class="eyebrow">{labels[data.category]}{data.featured ? " · 推荐" : ""}</p>}
+        <h1>{data.title}</h1><p class="detail-description">{data.description}</p>
+        {data.recordedAt && <div class="detail-meta"><span>收录于 <time datetime={data.recordedAt}>{data.recordedAt}</time></span>{data.eventDate && <span>事件日期 {data.eventDate}</span>}{data.source && <span>来源：{data.source}</span>}{data.pricing && <span>费用：{data.pricing}</span>}</div>}
+        {data.tags?.length > 0 && <div class="detail-tags">{data.tags.map((tag: string) => <a href={withBase() + "?tag=" + encodeURIComponent(tag)}>{tag}</a>)}</div>}
+        {data.link && <a class="primary-button source-button" href={data.link} target="_blank" rel="noopener noreferrer">访问原始链接</a>}
+      </header>
+      {cover && <img class="detail-cover" src={cover} alt={data.title} loading="lazy" />}
+      {data.note && <aside class="detail-note"><strong>我的评价</strong><p>{data.note}</p></aside>}
+      <div class="prose prose-zinc dark:prose-invert max-w-none detail-content"><slot /></div>
+      {slug?.startsWith("entry/") && <div class="detail-end"><p>继续记录你的发现。</p><a href="https://app.pagescms.org" target="_blank" rel="noopener noreferrer">打开内容后台</a></div>}
+    </main>
+  </AppShell>
 </BaseLayout>

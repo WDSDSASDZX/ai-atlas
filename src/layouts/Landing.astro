@@ -1,19 +1,5 @@
 ---
-import config from "@util/themeConfig";
-import Sidebar from "./Sidebar.astro";
-import Wide from "./Wide.astro";
-
-const sidebar = config.layout.sidebar;
+import BaseLayout from "./BaseLayout.astro";
+import AppShell from "@components/app/AppShell.astro";
 ---
-
-{
-  sidebar ? (
-    <Sidebar>
-      <slot />
-    </Sidebar>
-  ) : (
-    <Wide>
-      <slot />
-    </Wide>
-  )
-}
+<BaseLayout><AppShell><main id="main-content" class="atlas-main"><slot /></main></AppShell></BaseLayout>

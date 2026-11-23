@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+import { getListings } from "@lib/getListings";
+import { withBase } from "@util/paths";
+const listings = await getListings();
+const latest = listings.map(item => item.data.recordedAt).sort().at(-1);
+const stats = [
+  { label: "模型", key: "model", icon: "tabler:brain" },
+  { label: "工具", key: "tool", icon: "tabler:tool" },
+  { label: "开源项目", key: "project", icon: "tabler:brand-github" },
+  { label: "资讯", key: "news", icon: "tabler:news" },
+];
+---
+<section class="atlas-hero not-prose">
+  <div class="hero-copy">
+    <p class="eyebrow">YOUR AI FIELD NOTES</p>
+    <h1>把 AI 的变化，<br /><span>收进自己的地图。</span></h1>
+    <p class="hero-description">发现模型，收藏工具，追踪开源项目。<br class="desktop-break" />留下来源，也留下自己的判断。</p>
+    <div class="hero-foot"><span>持续整理的个人信息库</span><span>{latest ? "最近收录 " + latest : "从第一条记录开始"}</span></div>
+  </div>
+  <aside class="hero-map" aria-label="信息库概览">
+    <div class="map-heading"><span>ATLAS INDEX</span><span>{String(listings.length).padStart(2, "0")} 条收录</span></div>
+    <div class="stat-grid">{stats.map(stat => <a href={withBase() + "?category=" + stat.key} class="stat-card">
+      <Icon name={stat.icon} /><strong>{listings.filter(item => item.data.category === stat.key).length}</strong><span>{stat.label}</span>
+    </a>)}</div>
+    <p>从链接到理解，让每一次发现都有迹可循。</p>
+  </aside>
+</section>

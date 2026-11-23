@@ -8,15 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@ascorbic/airtable-loader':
-        specifier: ^1.0.5
-        version: 1.0.5(astro@5.5.2(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1))
-      '@ascorbic/csv-loader':
-        specifier: ^2.0.3
-        version: 2.0.3(astro@5.5.2(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1))
-      '@ascorbic/mock-loader':
-        specifier: ^2.0.2
-        version: 2.0.2(astro@5.5.2(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1))(zod@3.24.2)
       '@astrojs/check':
         specifier: ^0.9.4
         version: 0.9.4(typescript@5.6.2)
@@ -26,81 +17,27 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.2.1
         version: 3.2.1
-      '@astrojs/vue':
-        specifier: ^5.0.7
-        version: 5.0.7(@types/node@22.7.4)(astro@5.5.2(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1))(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(vue@3.5.11(typescript@5.6.2))(yaml@2.5.1)
-      '@fontsource-variable/dm-sans':
-        specifier: ^5.2.5
-        version: 5.2.5
-      '@fontsource-variable/eb-garamond':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@fontsource-variable/gabarito':
         specifier: ^5.2.5
         version: 5.2.5
-      '@fontsource-variable/inter':
-        specifier: ^5.2.5
-        version: 5.2.5
-      '@fontsource/gabarito':
-        specifier: ^5.1.0
-        version: 5.1.0
-      '@headlessui/vue':
-        specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.11(typescript@5.6.2))
       '@iarna/toml':
         specifier: ^2.2.5
         version: 2.2.5
-      '@nanostores/vue':
-        specifier: ^0.11.0
-        version: 0.11.0(nanostores@0.11.3)(vue@3.5.11(typescript@5.6.2))
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.2.1(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.5.1))
       '@types/node':
         specifier: ^22.7.4
         version: 22.7.4
-      '@vercel/og':
-        specifier: ^0.6.5
-        version: 0.6.5
       astro:
         specifier: ^5.5.2
         version: 5.5.2(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1)
-      astro-color-scheme:
-        specifier: ^1.1.5
-        version: 1.1.5
-      astro-sheet-loader:
-        specifier: ^1.0.5
-        version: 1.0.5(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1)
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
-      google-auth-library:
-        specifier: ^9.15.1
-        version: 9.15.1
-      google-spreadsheet:
-        specifier: ^4.1.4
-        version: 4.1.4(google-auth-library@9.15.1)
-      googleapis:
-        specifier: ^146.0.0
-        version: 146.0.0
-      nanostores:
-        specifier: ^0.11.3
-        version: 0.11.3
-      notion-astro-loader:
-        specifier: ^0.4.0
-        version: 0.4.0(astro@5.5.2(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.9)(typescript@5.6.2)(yaml@2.5.1))
-      sharp:
-        specifier: ^0.33.5
-        version: 0.33.5
       tailwindcss:
         specifier: ^4.0.14
         version: 4.0.14
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
-      vue:
-        specifier: ^3.5.11
-        version: 3.5.11(typescript@5.6.2)
       zod:
         specifier: ^3.24.2
         version: 3.24.2

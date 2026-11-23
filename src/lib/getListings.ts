@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
 
 export async function getListings() {
-  return await getCollection("directory");
+  return getCollection("directory", ({ data }) => !data.draft);
 }

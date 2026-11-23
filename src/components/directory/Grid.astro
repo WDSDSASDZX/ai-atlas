@@ -1,52 +1,11 @@
 ---
-import { getListings } from "../../lib/getListings";
-import PureGrid from "./PureGrid.astro";
-
-const allListings = (await getListings()).sort(
-  (a, b) => Number(b.data.featured) - Number(a.data.featured),
-);
+import { getListings } from "@lib/getListings";
+import Card from "./cards/index.astro";
+const listings = (await getListings()).sort((a,b) => Number(b.data.featured) - Number(a.data.featured) || b.data.recordedAt.localeCompare(a.data.recordedAt) || a.data.title.localeCompare(b.data.title, "zh-CN"));
 ---
-
-<PureGrid id="directory-grid" listings={allListings} />
-
+<div id="directory-grid" class="atlas-grid not-prose">{listings.map(item => <Card item={item} />)}</div>
+<div id="empty-state" class="empty-state not-prose" hidden><h3>还没找到匹配的信息</h3><p>换个关键词，或清除筛选重新看看。</p><button id="reset-filters" type="button" class="secondary-button">清除筛选</button></div>
 <script>
-  import { search, tags } from "../../store.js";
-
-  // Define the filtering function
-  function filterListings() {
-    const listingsArray = document.querySelectorAll(".listing");
-    const currentSearch = search.get().trim().toLowerCase();
-    const selectedTags = tags.get();
-    const selectedTagsSet: Set<string> = new Set(selectedTags); // For efficient lookup
-
-    for (const element of listingsArray) {
-      // Get content for search filtering
-      const content = (
-        (element.querySelector(".card-title")?.textContent || "") +
-        (element.querySelector(".card-description")?.textContent || "")
-      ).toLowerCase();
-
-      // Get tags from data attribute
-      if (element instanceof HTMLElement) {
-        const elementTags = element.dataset.tags?.split(",") || [];
-
-        // Determine if the listing matches
-        const matchesSearch = content.includes(currentSearch); // Empty search matches all
-        const matchesTags =
-          selectedTags.length === 0 ||
-          elementTags.some((tag: string) => selectedTagsSet.has(tag.trim()));
-
-        // Show or hide the listing
-        if (matchesSearch && matchesTags) {
-          element.classList.remove("hidden");
-        } else {
-          element.classList.add("hidden");
-        }
-      }
-    }
-  }
-
-  // Subscribe to both stores, triggering filtering on any change
-  search.subscribe(() => filterListings());
-  tags.subscribe(() => filterListings());
+  import { initDirectory } from "@lib/directory";
+  initDirectory();
 </script>

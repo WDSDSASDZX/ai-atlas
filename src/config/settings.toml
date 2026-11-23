@@ -1,89 +1,70 @@
-# available directory themes:
-# spearmint, peppermint, hemingway, brookmint
-theme = 'brookmint'
+theme = "peppermint"
 
 [general]
-title = "Meditation Apps"
+title = "AI Atlas"
 logo = ""
-iconLogo = "tabler:coffee"
+iconLogo = "tabler:stack-2"
 
 [general.seo]
-name = "Cafe Directory"
-description = "Find the best nuxt starter kits."
-url = "https://nuxtstarters.com"
+name = "AI Atlas · AI 信息库"
+description = "把值得关注的 AI 模型、工具、开源项目和资讯，整理成自己的知识地图。"
+url = "https://wdsdsasdzx.github.io/ai-atlas"
 
 [directoryData.source]
-name = "json"    # default, mock, sheets, json
-links = "normal"
+name = "markdown"
+linksOutbound = false
 
 [directoryData.tagPages]
-title = "{0} Apps"
+title = "{0}"
 
 [directoryData.search]
-placeholder = "Search among {0} listings of this directory :)"
+placeholder = "搜索名称、简介、标签或笔记…"
 
 [[directoryData.tags]]
-key = "breathing"
-name = "Breathing"
+key = "agent"
+name = "Agent"
 color = "blue"
-emoji = "👃"
-description = "Breathing techniques are a popular feature in meditation apps."
-
 [[directoryData.tags]]
-key = "sleep"
-name = "Sleep"
+key = "coding"
+name = "AI 编程"
+color = "indigo"
+[[directoryData.tags]]
+key = "local"
+name = "本地部署"
 color = "green"
-emoji = "💤"
-description = "Some apps include music that slowly goes away to help you sleep better and rest."
-
 [[directoryData.tags]]
-key = "meditation"
-name = "Meditation"
-color = "purple"
-emoji = "🧘‍♂️"
-description = "A meditation for your life. It's a great way to relax and clear your mind. It's also a great way to improve your sleep."
-
+key = "open-source"
+name = "开源"
+color = "blue"
 [[directoryData.tags]]
-key = "yoga"
-name = "Yoga"
-color = "purple"
-emoji = "🧘‍♂️"
-description = "A yoga for your life."
-
-[[directoryData.tags]]
-key = "timer"
-name = "Timer"
-color = "green"
-emoji = "⏰"
-description = "Timers can be used to track how much you meditate."
+key = "research"
+name = "研究"
+color = "indigo"
 
 [header.banner]
-show = true
-text = "Follow mark_bruderer on twitter."
-link = "https://x.com/intent/follow?screen_name=mark_bruderer"
-brandText = "AI Agent Libraries"
+show = false
+text = ""
+link = "https://github.com/WDSDSASDZX/ai-atlas"
+brandText = "AI Atlas"
 
 [header.navbar]
 colorModeSelector = true
-
 [[header.navbar.links]]
-name = "Blog"
-href = "/blog"
-
+name = "信息库"
+href = "/"
 [[header.navbar.links]]
-name = "Analytics"
-href = "https://us.posthog.com/shared/vHlGCcSqPjGH4r_QijaXSETtmN9J-g"
+name = "使用指南"
+href = "/guide"
+[[header.navbar.links]]
+name = "GitHub"
+href = "https://github.com/WDSDSASDZX/ai-atlas"
 target = "_blank"
 
 [header.actionButton]
-text = "Submit an app"
-href = "https://tally.so"
+text = "添加信息"
+href = "https://app.pagescms.org"
 
 [footer]
-description = "Best directory for my niche."
-
-[footer.socials.x]
-link = "https://x.com/mark_bruderer"
-
-[footer.socials.youtube]
-link = "https://www.youtube.com/@mark_hacks"
+description = "记录变化，沉淀判断。"
+[footer.socials.github]
+link = "https://github.com/WDSDSASDZX/ai-atlas"

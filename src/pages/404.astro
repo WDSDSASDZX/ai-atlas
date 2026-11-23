@@ -1,0 +1,6 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import AppShell from "@components/app/AppShell.astro";
+import { withBase } from "@util/paths";
+---
+<BaseLayout title="页面没有找到"><AppShell><main id="main-content" class="detail-page"><p class="eyebrow">404</p><h1>这页还不在地图上。</h1><p>记录可能已移动，回到信息库重新查找吧。</p><a class="primary-button" href={withBase()}>回到信息库</a></main></AppShell></BaseLayout>

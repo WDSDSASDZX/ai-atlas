@@ -1,26 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
-import config from "@util/themeConfig";
+import { withBase } from "@util/paths";
 ---
-
-<a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-  {
-    config.general.logo ? (
-      <img
-        sizes="32px"
-        src={config.general.logo}
-        class="h-8"
-        alt={config?.general.title + " Logo"}
-      />
-    ) : (
-      <Icon
-        class="w-7 h-7 text-gray-600 dark:text-white"
-        name={config?.general?.iconLogo}
-      />
-    )
-  }
-  <span
-    class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-    >{config.general.title}</span
-  >
+<a href={withBase()} class="atlas-logo" aria-label="AI Atlas 首页">
+  <span class="logo-mark"><Icon name="tabler:stack-2" /></span>
+  <span>AI Atlas<span class="logo-caption">个人 AI 信息库</span></span>
 </a>

@@ -1,0 +1,102 @@
+media:
+  input: public/media
+  output: /ai-atlas/media
+content:
+  - name: directory
+    label: AI 信息
+    type: collection
+    path: src/data/directory
+    format: yaml-frontmatter
+    filename:
+      template: "{year}-{month}-{day}-{primary}.md"
+      field: create
+    view:
+      primary: title
+      fields: [title, category, recordedAt, featured, draft]
+      sort: recordedAt
+      order: desc
+    fields:
+      - name: title
+        label: 名称 / 标题
+        type: string
+        required: true
+      - name: description
+        label: 一句话简介
+        type: text
+        required: true
+      - name: category
+        label: 分类
+        type: select
+        required: true
+        options:
+          values:
+            - name: model
+              label: 模型
+            - name: tool
+              label: 工具
+            - name: project
+              label: 开源项目
+            - name: news
+              label: 资讯
+      - name: link
+        label: 官网 / GitHub / 原文链接
+        type: string
+        description: 请使用 http:// 或 https:// 开头的完整地址。
+      - name: source
+        label: 来源名称
+        type: string
+        description: 例如官方文档、GitHub、Hugging Face 博客。
+      - name: recordedAt
+        label: 收录日期
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+          time: false
+      - name: eventDate
+        label: 事件 / 发布日期（可选）
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+          time: false
+      - name: tags
+        label: 标签
+        type: string
+        list: true
+        description: 可自由添加；建议使用 agent、coding、local、open-source、research，或自己的中文标签。
+      - name: pricing
+        label: 费用说明（可选）
+        type: string
+        description: 例如免费、开源、按量付费；请自行核对官网。
+      - name: note
+        label: 我的评价（可选）
+        type: text
+      - name: image
+        label: 封面图（可选）
+        type: image
+      - name: featured
+        label: 推荐
+        type: boolean
+        default: false
+      - name: draft
+        label: 草稿（从网站隐藏，但公开仓库仍可查看）
+        type: boolean
+        default: true
+      - name: body
+        label: 详细笔记
+        type: rich-text
+  - name: guide
+    label: 使用指南
+    type: file
+    path: src/data/pages/guide.md
+    fields:
+      - name: title
+        label: 标题
+        type: string
+      - name: description
+        label: 简介
+        type: text
+      - name: body
+        label: 内容
+        type: rich-text
