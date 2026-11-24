@@ -21,6 +21,10 @@ title = "{0}"
 placeholder = "搜索名称、简介、标签或笔记…"
 
 [[directoryData.tags]]
+key = "release"
+name = "版本动态"
+color = "indigo"
+[[directoryData.tags]]
 key = "agent"
 name = "Agent"
 color = "blue"
@@ -55,6 +59,9 @@ href = "/"
 [[header.navbar.links]]
 name = "AI 动态"
 href = "/timeline/"
+[[header.navbar.links]]
+name = "版本动态"
+href = "/updates/"
 [[header.navbar.links]]
 name = "资料库"
 href = "/library/"

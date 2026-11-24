@@ -26,7 +26,7 @@ export function entrySearch(entry: DirectoryEntry) {
     "data-tags": JSON.stringify(data.tags),
     "data-topics": topics.join(" "),
     "data-search": [
-      data.title, data.description, data.eventDate, categories[data.category],
+      data.title, data.description, data.eventDate, data.projectId, data.version, categories[data.category],
       ...data.tags, ...tagNames, ...topics.map(topic => topicLabels[topic]), ...extraText, entry.body,
     ].filter(Boolean).join(" ").toLocaleLowerCase(),
   };

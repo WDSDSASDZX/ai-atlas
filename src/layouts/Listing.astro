@@ -2,7 +2,9 @@
 import BaseLayout from "./BaseLayout.astro";
 import AppShell from "@components/app/AppShell.astro";
 import KnowledgeSections from "@components/directory/KnowledgeSections.astro";
+import ReleaseList from "@components/directory/ReleaseList.astro";
 import { getListings } from "@lib/getListings";
+import { getReleaseUpdates } from "@lib/getReleaseUpdates";
 import { availabilityLabels, categories, entryPath, isEdition, opennessLabels, relatedEntries, topicLabels, topicsFor } from "@lib/editorial";
 import type { AllContent } from "@/types/content";
 import { withBase } from "@util/paths";
@@ -11,7 +13,13 @@ interface Props { entry: AllContent }
 const { entry } = Astro.props;
 const { title, description } = entry.data;
 const data = entry.collection === "directory" ? entry.data : undefined;
-const related = entry.collection === "directory" ? relatedEntries(entry, await getListings()) : [];
+const listings = entry.collection === "directory" ? await getListings() : [];
+const related = entry.collection === "directory" ? relatedEntries(entry, listings) : [];
+const releases = getReleaseUpdates(listings);
+const currentRelease = releases.find(release => release.update.id === entry.id);
+const projectReleases = releases.filter(release =>
+  release.project.id === (currentRelease?.project.id ?? entry.id) && release.update.id !== entry.id
+);
 const cover = data?.image ? (typeof data.image === "string" ? withBase(data.image) : data.image.src) : undefined;
 const typeLabel = entry.collection === "directory" ? (isEdition(entry) ? "月度导读" : categories[entry.data.category]) : undefined;
 const topics = data ? topicsFor(data) : [];
@@ -21,13 +29,14 @@ const libraryUrl = withBase("library/");
 <BaseLayout title={title} description={description}>
   <AppShell>
     <main id="main-content" class="detail-page">
-      <a class="back-link" data-entry-back data-library={libraryUrl} data-timeline={timelineUrl} href={withBase()}>返回首页</a>
+      <a class="back-link" data-entry-back data-library={libraryUrl} data-timeline={timelineUrl} href={withBase(currentRelease ? "updates/" : "")}>{currentRelease ? "返回版本动态" : "返回首页"}</a>
       <header class="detail-header">
         {typeLabel && <p class="detail-label">{typeLabel}{data?.featured ? " · 推荐" : ""}</p>}
         <h1>{title}</h1>
         {description && <p class="detail-description">{description}</p>}
         {data && <dl class="entry-facts">
           {data.eventDate && <div><dt>事件日期</dt><dd><time datetime={data.eventDate}>{data.eventDate}</time></dd></div>}
+          {data.version && <div><dt>版本</dt><dd>{data.version}</dd></div>}
           {data.availability && <div><dt>状态</dt><dd><span class="availability-chip">{availabilityLabels[data.availability]}</span></dd></div>}
           {data.verifiedAt && <div><dt>最后核对</dt><dd><time datetime={data.verifiedAt}>{data.verifiedAt}</time></dd></div>}
           {data.openness && <div><dt>开放方式</dt><dd>{opennessLabels[data.openness]}</dd></div>}
@@ -41,13 +50,20 @@ const libraryUrl = withBase("library/");
           {topics.map(topic => <a href={libraryUrl + "?topic=" + topic + "#browse"}>{topicLabels[topic]}</a>)}
           {data.tags.map(tag => <a href={libraryUrl + "?tag=" + encodeURIComponent(tag) + "#browse"}>{tag}</a>)}
         </div>}
-        {data?.link && <a class="primary-button source-button" href={data.link} target="_blank" rel="noopener noreferrer">访问原始链接</a>}
+        <div class="detail-source-links">
+          {data?.link && <a class="primary-button source-button" href={data.link} target="_blank" rel="noopener noreferrer">{currentRelease ? "查看官方发布说明" : "访问原始链接"}</a>}
+          {currentRelease && <a class="secondary-button source-button" href={withBase(entryPath(currentRelease.project))}>查看 {currentRelease.project.data.title} 档案</a>}
+        </div>
       </header>
       {data?.takeaway && <aside class="detail-note detail-takeaway"><strong>为什么重要</strong><p>{data.takeaway}</p></aside>}
       {cover && <img class="detail-cover" src={cover} alt={title} loading="lazy" />}
       {data?.note && <aside class="detail-note"><strong>我的评价</strong><p>{data.note}</p></aside>}
       {data && <KnowledgeSections data={data} />}
       <div class="prose prose-zinc dark:prose-invert max-w-none detail-content"><slot /></div>
+      {projectReleases.length > 0 && <section class="knowledge-section" aria-labelledby="project-versions">
+        <h2 id="project-versions">{currentRelease ? "同一项目的其他动态" : "版本记录"}</h2>
+        <ReleaseList updates={projectReleases} showProject={false} />
+      </section>}
       {related.length > 0 && <section class="knowledge-section" aria-labelledby="related-heading">
         <h2 id="related-heading">相关条目</h2>
         <ul class="related-grid">
@@ -76,3 +92,6 @@ const libraryUrl = withBase("library/");
     } catch {}
   }
 </script>
+<style>
+  .detail-source-links { display: flex; flex-wrap: wrap; column-gap: 10px; }
+</style>

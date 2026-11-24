@@ -1,0 +1,27 @@
+---
+import ReleaseList from "./ReleaseList.astro";
+import { getReleaseUpdates, type ReleaseUpdate } from "@lib/getReleaseUpdates";
+import type { DirectoryEntry } from "@lib/editorial";
+import { withBase } from "@util/paths";
+
+interface Props { listings: DirectoryEntry[] }
+
+const updates = getReleaseUpdates(Astro.props.listings);
+const recentByProject: ReleaseUpdate[] = [];
+const includedProjects = new Set<string>();
+for (const update of updates) {
+  if (includedProjects.has(update.project.id)) continue;
+  includedProjects.add(update.project.id);
+  recentByProject.push(update);
+  if (recentByProject.length === 6) break;
+}
+---
+{updates.length > 0 && (
+  <section class="home-latest" aria-labelledby="recent-updates">
+    <header class="home-section-heading">
+      <h2 id="recent-updates">近期版本动态</h2>
+      <a href={withBase("updates/")}>查看全部 {updates.length} 条动态 <span aria-hidden="true">→</span></a>
+    </header>
+    <ReleaseList updates={recentByProject} />
+  </section>
+)}

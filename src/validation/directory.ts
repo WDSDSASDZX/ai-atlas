@@ -21,6 +21,9 @@ export const directorySchema = (imageSchema: z.ZodTypeAny) =>
     source: z.string().optional(),
     recordedAt: dateOnly,
     eventDate: optionalDate,
+    projectId: z.preprocess(value => value === "" || value === null ? undefined : value,
+      z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "请填写关联项目的英文文件名，不含扩展名").optional()),
+    version: z.preprocess(value => value === "" || value === null ? undefined : value, z.string().trim().min(1).optional()),
     verifiedAt: optionalDate,
     topics: z.preprocess(value => value ?? [], z.array(z.enum(topicKeys))),
     availability: z.preprocess(value => value === "" || value === null ? undefined : value, z.enum(availabilityKeys).optional()),
@@ -51,4 +54,9 @@ export const directorySchema = (imageSchema: z.ZodTypeAny) =>
     sections: z.preprocess(v => v ?? [], z.array(z.object({ title: z.string().trim().min(1), content: z.string().optional() })).default([])),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+  }).superRefine((entry, context) => {
+    if (entry.draft || (!entry.projectId && !entry.version)) return;
+    for (const field of ["projectId", "version", "eventDate", "link"] as const) {
+      if (!entry[field]) context.addIssue({ code: "custom", path: [field], message: "版本动态须填写关联项目、版本、事件日期和原文链接" });
+    }
   });

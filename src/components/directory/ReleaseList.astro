@@ -1,0 +1,36 @@
+---
+import type { ReleaseUpdate } from "@lib/getReleaseUpdates";
+import { withBase } from "@util/paths";
+
+interface Props {
+  updates: ReleaseUpdate[];
+  showProject?: boolean;
+}
+
+const { updates, showProject = true } = Astro.props;
+---
+<ul class="release-list" role="list">
+  {updates.map(({ update, project, eventDate, version }) => (
+    <li class="release-row">
+      <div class="release-meta">
+        <time datetime={eventDate}>{eventDate}</time>
+        {showProject && <a href={withBase(`entry/${project.id}/`)}>{project.data.title}</a>}
+        <span class="release-version">{version}</span>
+      </div>
+      <h3><a href={withBase(`entry/${update.id}/`)}>{update.data.title}</a></h3>
+      <p>{update.data.description}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .release-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0; margin: 0; }
+  .release-row { min-width: 0; border: 1px solid var(--atlas-line); border-radius: 12px; padding: 17px 19px; }
+  .release-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 10px; color: var(--atlas-muted); font-size: 12px; }
+  .release-meta a { color: var(--atlas-accent); }
+  .release-version { background: var(--atlas-soft); border: 1px solid var(--atlas-line); border-radius: 5px; padding: 0 6px; overflow-wrap: anywhere; }
+  .release-row h3 { margin: 7px 0 4px; font-size: 16px; font-weight: 600; line-height: 1.5; }
+  .release-row h3 a:hover, .release-meta a:hover { text-decoration: underline; }
+  .release-row p { color: var(--atlas-muted); font-size: 14px; line-height: 1.65; margin: 0; }
+  @media (max-width: 680px) { .release-list { grid-template-columns: 1fr; } }
+</style>

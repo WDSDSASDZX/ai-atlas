@@ -64,6 +64,14 @@ content:
         options:
           format: yyyy-MM-dd
           time: false
+      - name: projectId
+        label: 关联项目（版本动态填写）
+        type: string
+        description: 填写已公开项目档案的英文文件名，不含 .md，例如 vllm。
+      - name: version
+        label: 版本或发布名称（版本动态填写）
+        type: string
+        description: 例如 v0.34.0。版本动态同时填写关联项目、事件日期与官方原文链接。
       - name: topics
         label: 站点主题（可多选）
         type: select

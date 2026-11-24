@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import EventGroups from "@components/directory/EventGroups.astro";
+import RecentUpdates from "@components/directory/RecentUpdates.astro";
 import { getListings } from "@lib/getListings";
 import { availabilityLabels, byEventDate, categories, entryPath, getEvents, isEdition } from "@lib/editorial";
 import { withBase } from "@util/paths";
@@ -50,6 +51,7 @@ const catalog = [
     </article>)}
   </div>
 </section>}
+<RecentUpdates listings={listings} />
 <section class="home-latest" aria-labelledby="latest-heading">
   <header class="home-section-heading"><h2 id="latest-heading">最新动态</h2><a href={withBase("timeline/")}>查看全部动态</a></header>
   {newest.length > 0 ? <div class="event-groups"><EventGroups entries={newest} /></div> : <p>目前还没有带事件日期的条目。</p>}

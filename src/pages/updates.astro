@@ -1,0 +1,37 @@
+---
+import ReleaseList from "@components/directory/ReleaseList.astro";
+import Landing from "@layouts/Landing.astro";
+import { getListings } from "@lib/getListings";
+import { getReleaseUpdates, type ReleaseUpdate } from "@lib/getReleaseUpdates";
+
+const updates = getReleaseUpdates(await getListings());
+const months = new Map<string, ReleaseUpdate[]>();
+for (const update of updates) {
+  const month = update.eventDate.slice(0, 7);
+  const entries = months.get(month) ?? [];
+  entries.push(update);
+  months.set(month, entries);
+}
+const title = "版本动态";
+const description = "按发布日期查阅 GitHub 项目、AI 模型和 API 的变化。每条记录都列出具体改动、影响、验证思路和官方来源。";
+---
+<Landing title={title} description={description}>
+  <header class="browse-header">
+    <h1>{title}</h1>
+    <p>{description}</p>
+  </header>
+  {updates.length === 0 && <p>暂无版本动态。</p>}
+  {[...months].map(([month, entries]) => (
+    <section class="home-latest" aria-labelledby={`month-${month}`}>
+      <header class="home-section-heading">
+        <h2 id={`month-${month}`}>{month.slice(0, 4)} 年 {Number(month.slice(5))} 月</h2>
+        <span>{entries.length} 条动态</span>
+      </header>
+      <ReleaseList updates={entries} />
+    </section>
+  ))}
+</Landing>
+
+<style>
+  .home-section-heading > span { color: var(--atlas-muted); font-size: 14px; }
+</style>

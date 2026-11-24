@@ -30,5 +30,6 @@ await walk(root);
 if (await exists(join(root, "entry/draft-example/index.html"))) failures.push("Draft detail page was generated.");
 if (!await exists(join(root, "index.html"))) failures.push("Homepage is missing.");
 if (!await exists(join(root, "guide/index.html"))) failures.push("Guide is missing.");
+if (!await exists(join(root, "updates/index.html"))) failures.push("Release archive is missing.");
 if (failures.length) throw new Error(failures.join("\n"));
 console.log("Verified " + checked + " local links/assets; draft exclusion and required pages passed.");

@@ -27,8 +27,8 @@ export const opennessLabels = {
 const topicTags: Record<Topic, string[]> = {
   models: ["模型"],
   coding: ["coding", "agent", "mcp", "agent 工具链", "开发者生态"],
-  deployment: ["open-source", "开放权重", "部署", "本地部署", "local", "推理", "github"],
-  multimodal: ["多模态", "世界模型", "图像生成", "视频生成", "机器人", "具身智能"],
+  deployment: ["open-source", "开放权重", "部署", "本地部署", "local", "推理", "github", "inference", "serving", "rag", "vector-search", "gateway"],
+  multimodal: ["多模态", "multimodal", "世界模型", "图像生成", "视频生成", "机器人", "具身智能"],
   research: ["research", "科研", "数学", "物理", "评测"],
   governance: ["治理", "监管", "安全", "版权"],
   industry: ["产业", "算力", "ipo", "企业 ai"],

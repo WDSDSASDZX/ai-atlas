@@ -1,6 +1,6 @@
 ---
 title: DeepSeek
-description: DeepSeek 模型与研究项目的信息入口，可跟踪官方仓库和技术报告。
+description: "记录 DeepSeek 模型检查点、API 能力更新、开放权重和工具接口。"
 category: model
 link: https://github.com/deepseek-ai
 source: DeepSeek 官方组织
@@ -15,10 +15,17 @@ timeline:
 featured: false
 draft: false
 ---
-## 后续可以补充
 
-- 适合解决什么问题，与你的工作有什么关系。
-- 官方文档和实际体验，分别注明来源。
-- 使用限制、版本变化和需要进一步验证的结论。
+## 模型与服务如何对应
 
-[查看官方来源](https://github.com/deepseek-ai)
+发布公告可能更新模型快照，也可能为已有模型接入搜索、文件输入等服务端工具。在云端调用时核对模型 ID 与接口格式。用公开权重本地部署时，需要单独接入应用层工具并核对推理引擎兼容性。
+
+## 评估时记录什么
+
+编程任务先用固定仓库、相同工具和测试套件对比。文档问答则同时记录来源引用、文件解析、工具调用次数和无法找到证据时的响应。如果接入 API，分别看模型输出、服务端工具费用和重试策略。
+
+## 官方资料
+
+- [DeepSeek GitHub](https://github.com/deepseek-ai)
+- [DeepSeek API 更新日志](https://api-docs.deepseek.com/updates/)
+- [DeepSeek 官方模型卡](https://huggingface.co/deepseek-ai)
