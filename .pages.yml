@@ -37,7 +37,7 @@ content:
             - name: project
               label: 开源项目
             - name: news
-              label: 资讯
+              label: 技术动态
             - name: thought
               label: 想法 / 灵感
             - name: note
@@ -79,14 +79,16 @@ content:
         options:
           multiple: true
           values:
-            - { name: models, label: 模型发布 }
-            - { name: coding, label: AI 编程与 Agent }
-            - { name: deployment, label: 开源与部署 }
+            - { name: models, label: 模型架构与发布 }
+            - { name: coding, label: AI 编程、Agent 与 MCP }
+            - { name: deployment, label: 推理与部署 }
+            - { name: rag, label: RAG 与数据工程 }
+            - { name: training, label: 训练与微调 }
             - { name: multimodal, label: 多模态与机器人 }
             - { name: research, label: 研究与评测 }
-            - { name: governance, label: 治理与安全 }
-            - { name: industry, label: 产业与算力 }
-            - { name: products, label: 应用与工具 }
+            - { name: governance, label: 安全与可靠性 }
+            - { name: industry, label: 硬件与算力 }
+            - { name: products, label: 开发工具与应用 }
       - name: availability
         label: 发布或跟踪状态
         type: select

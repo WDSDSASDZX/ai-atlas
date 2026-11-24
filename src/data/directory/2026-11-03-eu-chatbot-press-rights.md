@@ -11,7 +11,7 @@ source: "欧盟法院公告"
 link: "https://curia.europa.eu/site/upload/docs/application/pdf/2026-11/cp260155en.pdf"
 availability: "tracked"
 featured: false
-draft: false
+draft: true
 takeaway: "做 AI 资讯产品时，引用来源、摘要和复用原文是不同的编辑动作，案件值得继续观察。"
 related: ["src/data/directory/2026-11-11-eu-ai-sandbox.md"]
 ---

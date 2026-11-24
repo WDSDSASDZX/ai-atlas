@@ -6,13 +6,14 @@ type Topic = DirectoryData["topics"][number];
 
 export const categories = {
   model: "模型", tool: "工具", project: "开源项目",
-  news: "资讯", thought: "想法 / 灵感", note: "实践笔记",
+  news: "技术动态", thought: "想法 / 灵感", note: "实践笔记",
 } satisfies Record<DirectoryData["category"], string>;
 
 export const topicLabels: Record<Topic, string> = {
-  models: "模型发布", coding: "AI 编程与 Agent", deployment: "开源与部署",
-  multimodal: "多模态与机器人", research: "研究与评测", governance: "治理与安全",
-  industry: "产业与算力", products: "应用与工具",
+  models: "模型架构与发布", coding: "AI 编程、Agent 与 MCP", deployment: "推理与部署",
+  rag: "RAG 与数据工程", training: "训练与微调",
+  multimodal: "多模态与机器人", research: "研究与评测", governance: "安全与可靠性",
+  industry: "硬件与算力", products: "开发工具与应用",
 };
 
 export const availabilityLabels = {
@@ -26,13 +27,15 @@ export const opennessLabels = {
 
 const topicTags: Record<Topic, string[]> = {
   models: ["模型"],
-  coding: ["coding", "agent", "mcp", "agent 工具链", "开发者生态"],
-  deployment: ["open-source", "开放权重", "部署", "本地部署", "local", "推理", "github", "inference", "serving", "rag", "vector-search", "gateway"],
+  coding: ["coding", "agent", "mcp", "workflow", "agent 工具链", "开发者生态"],
+  deployment: ["部署", "本地部署", "local", "推理", "inference", "serving", "gateway", "量化"],
+  rag: ["rag", "vector-search", "向量检索", "文档解析", "知识库", "数据基础设施"],
+  training: ["training", "fine-tuning", "微调", "训练"],
   multimodal: ["多模态", "multimodal", "世界模型", "图像生成", "视频生成", "机器人", "具身智能"],
   research: ["research", "科研", "数学", "物理", "评测"],
-  governance: ["治理", "监管", "安全", "版权"],
-  industry: ["产业", "算力", "ipo", "企业 ai"],
-  products: ["浏览器", "macos", "应用"],
+  governance: ["安全", "可靠性", "可观测性", "权限"],
+  industry: ["gpu", "算力", "硬件"],
+  products: ["浏览器", "macos", "应用", "开发工具"],
 };
 
 export function topicsFor(data: DirectoryData): Topic[] {
@@ -42,7 +45,7 @@ export function topicsFor(data: DirectoryData): Topic[] {
   const defaultTopic = { model: "models", project: "deployment", tool: "products" } as const;
   if (data.category in defaultTopic) {
     const topic = defaultTopic[data.category as keyof typeof defaultTopic];
-    if (!topics.includes(topic)) topics.unshift(topic);
+    if (!topics.includes(topic) && (data.category !== "project" || topics.length === 0)) topics.unshift(topic);
   }
   return topics;
 }

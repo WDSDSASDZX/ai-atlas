@@ -3,7 +3,7 @@ import { Icon } from "astro-icon/components";
 import EventGroups from "@components/directory/EventGroups.astro";
 import RecentUpdates from "@components/directory/RecentUpdates.astro";
 import { getListings } from "@lib/getListings";
-import { availabilityLabels, byEventDate, categories, entryPath, getEvents, isEdition } from "@lib/editorial";
+import { availabilityLabels, byEventDate, categories, entryPath, getEvents, isEdition, topicLabels, topicsFor } from "@lib/editorial";
 import { withBase } from "@util/paths";
 
 const listings = await getListings();
@@ -14,17 +14,30 @@ const issueEvents = editionTags.length ? events.filter(entry => entry.data.tags.
 const publishedFocus = issueEvents.filter(entry => entry.data.featured);
 const focus = [...publishedFocus.filter(entry => entry.data.takeaway), ...publishedFocus.filter(entry => !entry.data.takeaway)].slice(0, 5);
 const newest = events.slice(0, 8);
-const catalog = [
-  { key: "model", icon: "tabler:brain" },
-  { key: "tool", icon: "tabler:tool" },
-  { key: "project", icon: "tabler:brand-github" },
-  { key: "note", icon: "tabler:notes" },
-] as const;
+const topicIcons = {
+  models: "tabler:brain",
+  coding: "tabler:code",
+  deployment: "tabler:server",
+  rag: "tabler:database",
+  training: "tabler:adjustments",
+  multimodal: "tabler:photo",
+  research: "tabler:flask",
+  governance: "tabler:shield",
+  industry: "tabler:cpu",
+  products: "tabler:tool",
+} satisfies Record<keyof typeof topicLabels, string>;
+const topicCounts = new Map<string, number>();
+for (const entry of listings) {
+  for (const topic of topicsFor(entry.data)) {
+    topicCounts.set(topic, (topicCounts.get(topic) ?? 0) + 1);
+  }
+}
+const catalog = (Object.keys(topicLabels) as (keyof typeof topicLabels)[]).filter(topic => topicCounts.has(topic));
 ---
 <section class="atlas-brief" data-legacy-library={withBase("library/")} aria-labelledby="atlas-title">
   <div class="brief-intro">
-    <h1 id="atlas-title">AI 动态与资料库</h1>
-    <p>追踪全球 AI 发布、开源进展和行业变化。查来源，也留下一手笔记。</p>
+    <h1 id="atlas-title">AI 技术动态与资料库</h1>
+    <p>追踪模型、开源项目和开发工具。看清版本改动、技术取舍与验证方法。</p>
     <div class="brief-actions">
       <a class="brief-primary" href={withBase("timeline/")}>查看事件时间线</a>
       <a class="brief-secondary" href={withBase("library/")}>浏览资料库</a>
@@ -53,16 +66,16 @@ const catalog = [
 </section>}
 <RecentUpdates listings={listings} />
 <section class="home-latest" aria-labelledby="latest-heading">
-  <header class="home-section-heading"><h2 id="latest-heading">最新动态</h2><a href={withBase("timeline/")}>查看全部动态</a></header>
+  <header class="home-section-heading"><h2 id="latest-heading">最新技术动态</h2><a href={withBase("timeline/")}>查看全部动态</a></header>
   {newest.length > 0 ? <div class="event-groups"><EventGroups entries={newest} /></div> : <p>目前还没有带事件日期的条目。</p>}
 </section>
 <section class="home-catalog" aria-labelledby="catalog-heading">
-  <header class="home-section-heading"><h2 id="catalog-heading">按用途找资料</h2><a href={withBase("library/")}>全部资料</a></header>
+  <header class="home-section-heading"><h2 id="catalog-heading">按技术主题浏览</h2><a href={withBase("library/")}>全部资料</a></header>
   <div class="catalog-grid">
-    {catalog.map(({ key, icon }) => <a href={withBase("library/") + "?category=" + key + "#browse"} class="catalog-link">
-      <Icon name={icon} />
-      <strong>{categories[key]}</strong>
-      <span>{listings.filter(item => item.data.category === key).length} 条</span>
+    {catalog.map(topic => <a href={withBase("library/") + "?topic=" + topic + "#browse"} class="catalog-link">
+      <Icon name={topicIcons[topic]} />
+      <strong>{topicLabels[topic]}</strong>
+      <span>{topicCounts.get(topic)} 条</span>
     </a>)}
   </div>
 </section>

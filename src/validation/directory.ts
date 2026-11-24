@@ -5,7 +5,7 @@ const dateOnly = z.preprocess(value => value instanceof Date ? value.toISOString
   z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "日期格式应为 YYYY-MM-DD")
     .refine(value => !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value, "日期无效"));
 const optionalDate = z.preprocess(value => value === "" || value === null ? undefined : value, dateOnly.optional());
-export const topicKeys = ["models", "coding", "deployment", "multimodal", "research", "governance", "industry", "products"] as const;
+export const topicKeys = ["models", "coding", "deployment", "rag", "training", "multimodal", "research", "governance", "industry", "products"] as const;
 export const availabilityKeys = ["released", "preview", "announced", "restricted", "tracked", "retired"] as const;
 export const opennessKeys = ["source", "weights", "hosted"] as const;
 

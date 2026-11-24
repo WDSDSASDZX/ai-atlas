@@ -11,7 +11,7 @@ source: "美国加州司法部"
 link: "https://oag.ca.gov/news/press-releases/it%E2%80%99s-golden-state-not-wild-west-attorney-general-bonta-sues-openai-over"
 availability: "tracked"
 featured: false
-draft: false
+draft: true
 related: ["src/data/directory/2026-11-16-openai-embedded-assessments.md"]
 ---
 

@@ -14,7 +14,7 @@ availability: "released"
 openness: "hosted"
 access: "Gemini API、Gemini 应用和 Google Antigravity，部分入口需订阅"
 takeaway: "三个型号覆盖长流程、日常执行和复杂高频工作。选型时可以对着自己的代码或文件测。"
-related: ["src/data/directory/2026-11-17-gpt-6-2.md","src/data/directory/2026-11-19-gemini-mac-computer-use.md","src/data/directory/2026-11-10-gemini-robotics-2-5.md"]
+related: ["src/data/directory/2026-11-17-gpt-6-2.md", "src/data/directory/2026-11-19-gemini-mac-computer-use.md", "src/data/directory/2026-11-10-gemini-robotics-2-5.md"]
 timeline:
   - date: "2026-11-10"
     title: "Carbon 开放开发者入口"
@@ -31,6 +31,7 @@ timeline:
 links:
   - title: "Google DeepMind 的 Neon 模型卡"
     url: "https://deepmind.google/models/model-cards/gemini-4-neon/"
+topics: ["models", "multimodal", "research"]
 ---
 
 ## 三款模型分工
@@ -42,3 +43,11 @@ Carbon 面向最难的长流程工作，Hydrogen 面向高频、需要快速反�
 Google 公布 Neon 有 100 万词元上下文，API 每百万输入、缓存输入、输出词元分别为 3、0.15、15 美元。公告列出的首批渠道包括 Gemini API 的付费入口，以及面向 Pro 和 Ultra 订户的 Gemini 应用。
 
 百万上下文有利于把多份 PDF、图表和表格放在同一次任务里。实际效果值得用自己的材料检验，例如让模型同时核对三份表格并指出冲突，再检查它能否标明证据位置。
+
+## 跨档位比较怎样控制变量
+
+把长文档理解、短程工具执行、多文件代码修改分别评估。固定输入文件、工具配置、可用时间和输出 schema。长文场景按长度划分档位，并把证据插在文档前中后以检查位置偏差。开发者验证应记录 API model ID 与参数，避免把消费应用路由和 API 性能混在一起。
+
+## 看什么结果
+
+对文件与代码任务分别统计验收成功率、工具步骤、首 token 和总耗时。需要给多个用户部署时，加入并发或队列限制，在同一请求量下比较质量与延迟。官方文中的预算和可用入口属于发布时信息，复测需记下使用日期和环境。

@@ -13,7 +13,7 @@ verifiedAt: "2026-11-23"
 availability: "preview"
 openness: "hosted"
 access: "GitHub Copilot app，项目功能公开预览"
-related: ["src/data/directory/2026-10-28-github-octoverse.md","src/data/directory/2026-11-23-opencode-240.md"]
+related: ["src/data/directory/2026-11-23-opencode-240.md"]
 links:
   - title: "GitHub Universe 2026 官方综述"
     url: "https://github.blog/news-insights/company-news/github-universe-2026-evolving-every-layer-of-the-stack/"

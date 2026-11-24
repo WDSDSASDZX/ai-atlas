@@ -13,7 +13,7 @@ verifiedAt: "2026-11-23"
 availability: "released"
 openness: "weights"
 access: "Hy4 flash 权重见腾讯官方模型卡"
-related: ["src/data/directory/2026-11-16-qwen4-max.md","src/data/directory/2026-11-23-glm-5-4.md"]
+related: ["src/data/directory/2026-11-16-qwen4-max.md", "src/data/directory/2026-11-23-glm-5-4.md"]
 timeline:
   - date: "2026-11-04"
     title: "发布 Hy4"

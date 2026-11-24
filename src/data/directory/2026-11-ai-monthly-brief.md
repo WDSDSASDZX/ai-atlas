@@ -1,75 +1,50 @@
 ---
-title: "2026 年 11 月 AI 动态导读"
-description: "从 10 月 24 日到 11 月 23 日，按主题查看 39 条全球 AI 动态和 GitHub 项目更新。"
+title: "2026 年 11 月 AI 技术导读"
+description: "从推理部署、模型架构、RAG、Agent、微调和多模态六个方向，读懂版本变化并找到可复现的验证方法。"
 category: news
-recordedAt: "2026-11-23"
-eventDate: "2026-11-23"
-tags: ["2026-11-月度", "月度导读", "全球 AI"]
+recordedAt: "2026-11-24"
+eventDate: "2026-11-24"
+tags: ["2026-11-月度", "月度导读"]
 source: "AI Atlas 编辑整理"
 featured: true
 draft: false
 ---
 
-本期覆盖 **2026 年 10 月 24 日至 11 月 23 日**。选题按实际影响、开发者相关性和来源可核对程度取舍。条目日期采用来源标注的公告日期，GitHub 版本使用发布记录中的日期。同一系列的多次更新会合在一篇，详情页给出对应时间线。
+本期把相关版本放在同一个工程问题里看。项目页面附有发布说明或技术文档。下文的验证方法可以用自己的模型、样本和硬件复测。
 
-## 第一次读，从这几篇开始
+## 推理与部署
 
-- [Anthropic 上市](../2026-11-19-anthropic-ipo/) 和 [NVIDIA 11 月动态](../2026-11-23-nvidia-november/) 适合了解模型公司的经营披露和算力基础设施变化。
-- [GPT‑6.2](../2026-11-17-gpt-6-2/)、[Gemini 4](../2026-11-18-gemini-4-series/) 和 [Qwen4‑Max](../2026-11-16-qwen4-max/) 适合对照看各家如何为复杂任务和日常高频任务提供不同型号。
-- [欧盟 AI 沙盒规则](../2026-11-11-eu-ai-sandbox/) 适合了解监管试验怎样申请和开展。
-- [美国 BIS 算力规则](../2026-11-16-bis-cloud-compute-rule/) 和 [欧盟新闻版权意见](../2026-11-03-eu-chatbot-press-rights/) 可以放在一起看，理解 AI 服务在算力供应和内容来源方面面临的规定。
-- 如果主要想找能试用的代码，从 [OpenCode](../2026-11-23-opencode-240/)、[vLLM](../2026-11-16-vllm-034/) 和 [PAN 2](../2026-11-10-pan-2/) 开始，分别对应编码、模型部署和世界模型研究。
+- [vLLM v0.34.0](../2026-11-16-vllm-034/) 改用默认可扩展 KV 缓存并移除旧 GPU Runner。升级先验证旧配置能否启动，再看缓存容量、首 token 延迟与并发下的失败率。
+- [SGLang v0.5.23](../sglang-v0523/) 增加按需加载专家和量化 MoE 的 LoRA 服务。适合比较单卡显存预算内能否加载、专家换入是否拉长尾延迟。
+- [TensorRT-LLM v1.3.0](../tensorrt-llm-v130/) 提供 Rubin 预览、更新 KV 缓存和 API。先按架构核对模型和量化的支持矩阵，再跑长输入、共享前缀及多轮请求。
+- [推理引擎选型与基准](../inference-engine-benchmark/) 给出一套可横向复用的测试口径。
 
-## 模型与多模态
+## 模型架构与评测
 
-- 11 月 17 日　[OpenAI 发布 GPT‑6.2 Astra 和 Sol](../2026-11-17-gpt-6-2/)
-- 11 月 18 日　[Gemini 4 本月三次更新：Carbon、Hydrogen 与 Neon](../2026-11-18-gemini-4-series/)
-- 11 月 9 日　[Anthropic 发布 Claude Fable 5.2 和 Mythos 5.2](../2026-11-09-claude-fable-5-2/)
-- 11 月 16 日　[阿里发布 Qwen4‑Max](../2026-11-16-qwen4-max/)
-- 11 月 16 日　[腾讯混元本月发布 Hy4 与 Hy4 flash](../2026-11-16-tencent-hy4-series/)
-- 11 月 23 日　[智谱发布 GLM‑5.4，采用 Loop Transformer](../2026-11-23-glm-5-4/)
-- 11 月 5 日　[Mistral Large 4 进入正式可用阶段](../2026-11-05-mistral-large-4-ga/)
-- 11 月 22 日　[印度 Sarvam 发布 105B‑1711 开放权重](../2026-11-22-sarvam-105b-1711/)
-- 11 月 3 日　[Sarvam 开放决策模型 Prism 权重](../2026-11-03-sarvam-prism/)
-- 11 月 6 日　[韩国 Kakao 发布 Kanana‑2‑v‑decide 3B](../2026-11-06-kakao-kanana-decide/)
-- 11 月 4 日　[OpenAI 发布 Images 2.6 Sunburst 与 Flare](../2026-11-04-openai-images-2-6/)
+- [Qwen4-Max](../2026-11-16-qwen4-max/) 用 Gated DeltaNet 与稀疏注意力处理长输入。[GLM‑5.4](../2026-11-23-glm-5-4/) 引入循环计算。读架构说明时，可对照不同长度下的首 token、生成速度和证据定位准确率。
+- [GPT‑6.2](../2026-11-17-gpt-6-2/) 与 [Gemini 4](../2026-11-18-gemini-4-series/) 各有偏重深度或响应速度的型号。用相同仓库任务和同一批文档分别测正确率、工具轮次和通过验收的总耗时。
+- [Mistral Large 4](../2026-11-05-mistral-large-4-ga/) 可结合 vLLM 的模型支持表看张量并行、量化格式与权重许可。
 
-## 产业、算力与治理
+## RAG 与数据工程
 
-- 11 月 19 日　[Anthropic 在纳斯达克上市](../2026-11-19-anthropic-ipo/)
-- 11 月 23 日　[NVIDIA 的 11 月：CEO 变动、财报与 Vera Rubin 出货](../2026-11-23-nvidia-november/)
-- 11 月 11 日　[欧盟公布 AI 监管沙盒实施细则](../2026-11-11-eu-ai-sandbox/)
-- 11 月 13 日　[欧盟领导人在都柏林讨论 AI 竞争力](../2026-11-13-eu-dublin-ai/)
-- 11 月 17 日　[Microsoft Ignite 推出 MAI Code 2 系列和授权权重计划](../2026-11-17-microsoft-ignite-ai/)
-- 11 月 16 日　[美国 BIS 公布先进算力远程访问规则](../2026-11-16-bis-cloud-compute-rule/)
-- 11 月 16 日　[加州就 AI 安全事件对 OpenAI 提起诉讼](../2026-11-16-california-openai-lawsuit/)
-- 11 月 16 日　[OpenAI 公布首阶段第三方安全评估安排](../2026-11-16-openai-embedded-assessments/)
-- 11 月 3 日　[欧盟法院总法律顾问对 AI 聊天机器人复用新闻提出意见](../2026-11-03-eu-chatbot-press-rights/)
-- 10 月 28 日　[GitHub Octoverse 2026 发布年度开发报告](../2026-10-28-github-octoverse/)
+- [Docling](../docling/) 负责将文档结构、表格和媒体整理为可索引的内容。[Qdrant v1.20.0](../qdrant-v1200/) 可以在全文字段索引里做 BM25 打分，再和向量匹配配合。
+- [LlamaIndex v0.14.26](../llama-index-v01426/) 有主包和集成包的依赖变更。[RAGFlow 1.0](../ragflow-100/) 把多步检索和证据充分性判断放进聊天链路。
+- [从文档解析到答案引用](../rag-pipeline-evaluation/) 给出按解析、检索、生成三层定位问题的方法，也涵盖空结果和权限过滤的检查。
 
-## 开发工具与协议
+## Agent、MCP 与可观测性
 
-- 10 月 28 日　[GitHub Universe：Copilot Projects 开放公开预览](../2026-10-28-github-universe-copilot/)
-- 11 月 13 日　[DeepSeek 把客户端的工具能力开放到 API](../2026-11-13-deepseek-app-api/)
-- 11 月 19 日　[Gemini Mac 应用加入操作桌面功能](../2026-11-19-gemini-mac-computer-use/)
-- 11 月 5 日　[Meta Muse 推出实时语音和虚拟形象](../2026-11-05-meta-muse-voice/)
-- 11 月 11 日　[MCP 规范公布每年两次的发布节奏](../2026-11-11-mcp-release-cycle/)
-- 10 月 27 日　[Opera 139 接入 Web AI 提案](../2026-10-27-opera-web-ai/)
+- [LangGraph 1.2.22](../langgraph-1222/) 修复独立线程子图的事件输出。[Dify 1.20.0](../dify-1200/) 接入消息审批和 OpenTelemetry，可从真实审批流程检查恢复与追踪。
+- [FastMCP v4.2.5](../fastmcp-v425/) 开放工具、提示、资源变化的订阅流。[Langfuse v4.84.0](../langfuse-v4840/) 改进追踪处理和批量标注入口。两边都值得验证长连接断开和遥测数据丢失时的行为。
+- [Hermes Agent v0.23.0](../2026-11-05-hermes-agent-023/) 把多端会话集中到网关，一个直接的回归样例是两个客户端交替发送、断线重连后检查历史是否一致。
+- [有状态 Agent 的可靠性验证](../agent-reliability-tests/) 用可控失败检查恢复、审批、连接和追踪。
 
-## 世界模型、具身智能与科研
+## 训练与微调
 
-- 10 月 27 日　[Google Genie 4 从有限测试走向网页与 API](../2026-10-27-genie-4/)
-- 11 月 10 日　[Gemini Robotics 2.5 开始向机器人合作伙伴推出](../2026-11-10-gemini-robotics-2-5/)
-- 10 月 26 日　[OpenAI 公布指数时间假说反驳稿和 Lean 形式化](../2026-10-26-openai-eth-research/)
-- 11 月 17 日　[Anthropic 公开 Claude 参与黑洞理论研究的案例](../2026-11-17-claude-black-hole-research/)
+- [PEFT v0.22.0](../peft-v0220/) 加入部分连接微调和新的 LoRA 初始化，并扩充分布式训练、合并与权重导出支持。
+- [Transformers v5.24.0](../2026-11-21-transformers-524/) 统一缓存字段。自定义生成循环、适配器依赖或旧模型代码需要连同训练与推理环境一起复测。
 
-## GitHub 仓库与版本更新
+## 多模态与研究
 
-- 11 月 10 日　[MBZUAI 的 IFM 发布开放世界模型 PAN 2](../2026-11-10-pan-2/)
-- 11 月 15 日　[美团 LongCat‑Video‑Avatar 1.6 发布](../2026-11-15-longcat-video-avatar-16/)
-- 11 月 23 日　[OpenCode v2.4.0 加入桌面浏览器与自动化](../2026-11-23-opencode-240/)
-- 11 月 5 日　[Hermes Agent v0.23.0 整合浏览器工作台与会话](../2026-11-05-hermes-agent-023/)
-- 11 月 12 日　[Vercel Labs agent-desktop v1.3.0 增加 macOS 虚拟机沙盒](../2026-11-12-agent-desktop-130/)
-- 11 月 16 日　[vLLM v0.34.0 更新 GPU 推理运行器与缓存默认值](../2026-11-16-vllm-034/)
-- 11 月 21 日　[Hugging Face Transformers v5.24.0 增加 Inkling 2 Mini 和 Apertus 1.5](../2026-11-21-transformers-524/)
-- 11 月 10 日　[Ollama v0.40.17 加入 Inkling 2 Mini 支持](../2026-11-10-ollama-04017/)
+- [Diffusers v0.43.0](../diffusers-v0430/) 将新图像、视频与世界模型接入组件式管线。[PAN 2](../2026-11-10-pan-2/) 可用于研究同一初始画面在不同动作条件下的变化。
+- [ComfyUI v0.46.0](../comfyui-v0460/) 变更视频拼接和通道处理，并移除 DirectML。升级时需要用实际素材检查帧率、音轨和图像通道。
+- [Gemini 4 与 Lean](../2026-11-23-gemini-lean-quantum/) 把智能体候选方案交给形式化验证。阅读时区分数学证明、资源估算和真机运行三类证据。

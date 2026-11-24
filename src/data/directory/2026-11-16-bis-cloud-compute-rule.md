@@ -11,7 +11,7 @@ source: "美国商务部工业与安全局（BIS）"
 link: "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology"
 availability: "announced"
 featured: true
-draft: false
+draft: true
 takeaway: "即使芯片安装在第三国，部分远程算力服务也可能涉及许可。AI 团队需要关注云服务的交付条件。"
 related: ["src/data/directory/2026-11-23-nvidia-november.md","src/data/directory/2026-11-13-eu-dublin-ai.md"]
 ---

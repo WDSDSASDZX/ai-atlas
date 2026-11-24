@@ -11,7 +11,7 @@ source: "OpenAI 官方公告"
 link: "https://openai.com/index/our-first-phase-of-embedded-assessments/"
 availability: "announced"
 featured: false
-draft: false
+draft: true
 related: ["src/data/directory/2026-11-16-california-openai-lawsuit.md","src/data/directory/2026-11-17-gpt-6-2.md"]
 ---
 

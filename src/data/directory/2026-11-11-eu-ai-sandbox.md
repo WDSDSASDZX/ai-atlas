@@ -8,7 +8,7 @@ tags: ["2026-11-月度","欧盟","治理","监管"]
 link: "https://publications.europa.eu/resource/cellar/e501019f-dd70-11f1-8501-01aa75ed71a1.0006.01/DOC_1"
 source: "欧盟官方公报"
 featured: true
-draft: false
+draft: true
 verifiedAt: "2026-11-23"
 availability: "released"
 takeaway: "准备在欧洲部署 AI 的团队，可以据此了解监管试验如何申请、测试和退出。"

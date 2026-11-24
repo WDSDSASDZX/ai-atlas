@@ -11,7 +11,7 @@ source: "Meta 官方公告"
 link: "https://about.fb.com/news/2026/11/introducing-muse-ai-voice-expressive-avatars/"
 availability: "released"
 featured: false
-draft: false
+draft: true
 access: "Muse 移动端、网页和 Mac，按官方公告逐步推出"
 openness: "hosted"
 related: ["src/data/directory/2026-11-19-gemini-mac-computer-use.md"]

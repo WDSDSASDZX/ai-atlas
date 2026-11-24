@@ -7,7 +7,7 @@ iconLogo = "tabler:stack-2"
 
 [general.seo]
 name = "AI Atlas · AI 信息库"
-description = "把值得关注的 AI 模型、工具、开源项目和资讯，整理成自己的知识地图。"
+description = "追踪 AI 模型、GitHub 项目与开发工具。收录技术机制、版本变化、部署要求、实测思路和官方来源。"
 url = "https://wdsdsasdzx.github.io/ai-atlas"
 
 [directoryData.source]
@@ -57,7 +57,7 @@ colorModeSelector = true
 name = "首页"
 href = "/"
 [[header.navbar.links]]
-name = "AI 动态"
+name = "技术动态"
 href = "/timeline/"
 [[header.navbar.links]]
 name = "版本动态"
